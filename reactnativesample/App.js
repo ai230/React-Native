@@ -15,11 +15,15 @@ import TodoInput from './src/component/TodoInput';
 
 
 export default class App extends Component<{}> {
+  _onPress = (text) => {
+    console.log(text);
+  }
+
   render() {
     return (
       <View style={styles.container}>
         <View style={styles.main}>
-          <TodoInput />
+          <TodoInput onPress={this._onPress} />
         </View>
       </View>
     );
