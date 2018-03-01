@@ -56,7 +56,7 @@ export default class TodoInput extends Component {
         <TouchableOpacity 
           style={styles.button}
           onPress={this._onPress}>
-          <Text style={styles.buttonText}>Add1</Text>
+          <Text style={styles.buttonText}>Add</Text>
         </TouchableOpacity>
       </View>
     );

@@ -30,6 +30,24 @@ export default class App extends Component<{}> {
     };
   }
 
+  _delete = (index) => () => {
+    const list = [].concat(this.state.list);
+    list.splice(index, 1);
+
+    this.setState({
+      list,
+    });
+  }
+
+  _done = (index) => () => {
+    const list = [].concat(this.state.list);
+    list[index].done = !list[index].done;
+
+    this.setState({
+      list,
+    });
+  }
+  
   _onPress = (text) => {
     console.log(text);
     const list = [].concat(this.state.list);
@@ -58,7 +76,12 @@ export default class App extends Component<{}> {
             <FlatList
               style={styles.todoList}
               data={list}
-              renderItem={({ item }) => <TodoItem {...item} />}
+              renderItem={({ item, index }) => 
+              <TodoItem 
+                onDone={this._done(index)}
+                onDelete={this._delete(index)}
+                {...item}
+              />}
             />
         </View>
       </View>
