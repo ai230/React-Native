@@ -17,6 +17,7 @@ import {
 import * as d3scale from 'd3-scale'
 import * as d3shape from 'd3-shape'
 import * as d3Array from 'd3-array'
+import { Dropdown } from 'react-native-material-dropdown';
 
 const {
   Surface,
@@ -36,12 +37,12 @@ const pieData = [
 
 const lineData = [
   [
-    { date: new Date(2017, 9, 24), value: 93.24 },
-    { date: new Date(2017, 9, 25), value: 95.35 },
-    { date: new Date(2017, 9, 26), value: 98.84 },
-    { date: new Date(2017, 9, 27), value: 99.92 },
-    { date: new Date(2017, 9, 28), value: 99.80 },
-    { date: new Date(2017, 9, 29), value: 99.47 }
+    { date: new Date(2017, 9, 24), value: 83.24 },
+    { date: new Date(2017, 9, 25), value: 85.35 },
+    { date: new Date(2017, 9, 26), value: 88.84 },
+    { date: new Date(2017, 9, 27), value: 79.92 },
+    { date: new Date(2017, 9, 28), value: 89.80 },
+    { date: new Date(2017, 9, 29), value: 79.47 }
   ], [
     { date: new Date(2017, 9, 24), value: 92.24 },
     { date: new Date(2017, 9, 25), value: 94.35 },
@@ -49,20 +50,6 @@ const lineData = [
     { date: new Date(2017, 9, 27), value: 98.92 },
     { date: new Date(2017, 9, 28), value: 98.80 },
     { date: new Date(2017, 9, 29), value: 98.47 }
-  ], [
-    { date: new Date(2017, 9, 24), value: 91.24 },
-    { date: new Date(2017, 9, 25), value: 93.35 },
-    { date: new Date(2017, 9, 26), value: 96.84 },
-    { date: new Date(2017, 9, 27), value: 97.92 },
-    { date: new Date(2017, 9, 28), value: 97.80 },
-    { date: new Date(2017, 9, 29), value: 98.47 }
-  ], [
-    { date: new Date(2017, 9, 24), value: 90.24 },
-    { date: new Date(2017, 9, 25), value: 93.35 },
-    { date: new Date(2017, 9, 26), value: 95.84 },
-    { date: new Date(2017, 9, 27), value: 96.92 },
-    { date: new Date(2017, 9, 28), value: 96.80 },
-    { date: new Date(2017, 9, 29), value: 96.47 }
   ]
 ]
 
@@ -105,6 +92,13 @@ const colors = [
   '#FFC107', '#FF9800', '#FF5722',
 ]
 
+const data = [{
+  value: 'Pie',
+}, {
+  value: 'Line',
+}, {
+  value: 'Area',
+}];
 
 export default class App extends Component {
   constructor(props) {
@@ -112,12 +106,26 @@ export default class App extends Component {
     this.state = { chart: 'pie' }
   }
 
+  renderdropdown() {
+    return (
+      <Dropdown
+        containerStyle={{ width: width * 0.8, paddingLeft: width * 0.02 }}
+        label='Select Chart'
+        data={data}
+        value='Pie'
+        onChangeText={(value) => (
+          this.setState({ chart: value })
+        )}
+      />
+    )
+  }
+
   renderButtons() {
     return (
       <View style={{ height: 60, marginTop: 20, flexDirection: 'row', alignItems: 'center', justifyContent: 'center' }}>
-        <Button title="Pie" onPress={() => this.setState({ chart: 'pie' })} />
-        <Button title="Line" onPress={() => this.setState({ chart: 'line' })} />
-        <Button title="Area" onPress={() => this.setState({ chart: 'area' })} />
+        <Button title="Pie" onPress={() => this.setState({ chart: 'Pie' })} />
+        <Button title="Line" onPress={() => this.setState({ chart: 'Line' })} />
+        <Button title="Area" onPress={() => this.setState({ chart: 'Area' })} />
       </View>
     )
   }
@@ -154,7 +162,7 @@ export default class App extends Component {
   }
 
   renderLineChart() {
-    const y = d3scale.scaleLinear().domain([90.24, 99.92]).range([width - 80, 0])
+    const y = d3scale.scaleLinear().domain([0, 99.92]).range([width - 80, 0])
     const x = d3scale.scaleTime().domain([new Date(2017, 9, 24), new Date(2017, 9, 29)]).range([0, width - 40])
     const lineChart = { paths: [] }
     lineData.map((line, index) => {
@@ -218,13 +226,13 @@ export default class App extends Component {
   render() {
     let chart
     switch (this.state.chart) {
-      case 'pie':
+      case 'Pie':
         chart = this.renderPieChart()
         break
-      case 'line':
+      case 'Line':
         chart = this.renderLineChart()
         break
-      case 'area':
+      case 'Area':
         chart = this.renderAreaChart()
         break
       default:
@@ -232,6 +240,7 @@ export default class App extends Component {
     }
     return (
       <View style={styles.container}>
+        {this.renderdropdown()}
         {this.renderButtons()}
         {chart}
       </View>
@@ -244,7 +253,6 @@ const styles = StyleSheet.create({
     flex: 1,
     justifyContent: 'center',
     alignItems: 'center',
-    backgroundColor: '#F5FCFF',
   },
   welcome: {
     fontSize: 20,
