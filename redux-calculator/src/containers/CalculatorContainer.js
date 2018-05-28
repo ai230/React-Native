@@ -1,23 +1,33 @@
 import React, { Component } from 'react'
+import NumBtn from '../components/NumBtn';
+import PlusBtn from '../components/PlusBtn';
+import Result from '../components/Result';
 
 class CalculatorContainer extends Component {
     render() {
         return (
             <div>
                 <div>
-                    <button>1</button>
-                    <button>2</button>
-                    <button>3</button>
+                    <NumBtn n={1} />
+                    <NumBtn n={2} />
+                    <NumBtn n={3} />
                 </div>
                 <div>
-                    <button>1</button>
-                    <button>2</button>
-                    <button>3</button>
+                    <NumBtn n={4} />
+                    <NumBtn n={5} />
+                    <NumBtn n={6} />
                 </div>
                 <div>
-                    <button>1</button>
-                    <button>2</button>
-                    <button>3</button>
+                    <NumBtn n={7} />
+                    <NumBtn n={8} />
+                    <NumBtn n={9} />
+                </div>
+                <div>
+                    <NumBtn n={0} />
+                    <PlusBtn />
+                </div>
+                <div>
+                    <Result />
                 </div>
             </div>
         ) 
