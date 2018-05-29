@@ -1,8 +1,8 @@
 import React, { Component } from 'react'
 
-const Result = () => (
+const Result = ({result}) => (
     <div>
-        Result: <span> ... </span>
+        Result: <span> {result} </span>
     </div>
 )
 export default Result
